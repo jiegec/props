@@ -1,4 +1,4 @@
-prpos
+props
 ===========
 这是一个关于命题的计算器/支持not(~),and(/\\),or(\\/),implies(->),double implies(<->).
 

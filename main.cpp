@@ -12,7 +12,7 @@ extern "C" {
 
 int prop[26] = {0}, prop_num = 0;
 char prop_name[26] = {0};
-bool permu[27] = {0};
+bool permu[27] = {false};
 
 void mark_props(Expression *root) {
     if (root == nullptr)
@@ -243,5 +243,4 @@ int main() {
                 return 0;
         }
     }
-    return 0;
 }
