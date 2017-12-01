@@ -3,78 +3,19 @@
 #include <numeric>
 #include <string>
 #include <sstream>
-
-extern "C" {
-#include "expression.h"
-#include "parser.h"
-#include "lexer.h"
-}
-
-int prop[26] = {0}, prop_num = 0;
-char prop_name[26] = {0};
-bool permu[27] = {false};
-
-void mark_props(Expression *root) {
-    if (root == nullptr)
-        return;
-    mark_props(root->left);
-    if (root->type == PROP && !prop[root->value - 'A']) {
-        prop[root->value - 'A'] = 1;
-        prop_num++;
-    }
-    mark_props(root->right);
-}
-
-bool calc(Expression *root) {
-    if (root == nullptr)
-        return false;
-    bool left = calc(root->left);
-    bool right = calc(root->right);
-    switch (root->type) {
-        case NOT:
-            return !right;
-        case AND:
-            return left && right;
-        case OR:
-            return left || right;
-        case IMPLIES:
-            return (!left) || right;
-        case DOUBLE_IMPLIES:
-            return (left && right) || (!left && !right);
-        case PROP:
-            return permu[prop[root->value - 'A']];
-        default:
-            return false;
-    }
-}
-
-bool next_permutation() {
-    bool hasZero = false;
-    int lastZero = 0;
-    for (int i = 1; i <= prop_num; i++) {
-        if (!permu[i]) {
-            hasZero = true;
-            lastZero = i;
-        }
-    }
-    if (!hasZero)
-        return false;
-    permu[lastZero] = true;
-    for (int i = lastZero + 1; i <= prop_num; i++) {
-        permu[i] = false;
-    }
-    return true;
-}
+#include "prop.h"
 
 int main() {
+    int prop[26] = {0}, prop_num = 0;
+    char prop_name[26] = {0};
+    bool permu[27] = {false};
+
     while (true) {
         char buffer[1024];
         char temp;
         size_t len = 0;
         auto action = 0, count = 0;
-        Expression *exp;
-        yyscan_t scanner;
-        YY_BUFFER_STATE state;
+        Expression *exp = nullptr;
         std::vector<int> v_or, v_and;
 
         printf("0: Quit program\n1: Show T/F Table\n2: Generate Formula from T/F Table\n3: Get Main Formulas\n");
@@ -98,14 +39,9 @@ int main() {
                         break;
                 }
 
-                yylex_init(&scanner);
-                state = yy_scan_string(buffer, scanner);
-                yyparse(&exp, scanner);
-                yy_delete_buffer(state, scanner);
-                yylex_destroy(scanner);
-
+                parse_expression(&exp, buffer);
                 // Collect props alphabetically
-                mark_props(exp);
+                mark_props(exp, prop, prop_num);
                 count = 0;
                 for (auto i = 0; i < 26; i++) {
                     if (prop[i]) {
@@ -123,8 +59,8 @@ int main() {
                     for (auto i = 1; i <= prop_num; i++) {
                         printf(" %c ", permu[i] ? 'T' : 'F');
                     }
-                    printf(" %c \n", calc(exp) ? 'T' : 'F');
-                } while (next_permutation());
+                    printf(" %c \n", calc(exp, prop, permu) ? 'T' : 'F');
+                } while (next_permutation(prop_num, permu));
 
                 break;
             case 2:
@@ -160,7 +96,7 @@ int main() {
                             break;
                     }
                     count++;
-                } while (next_permutation());
+                } while (next_permutation(prop_num, permu));
 
                 printf("\\/_{");
                 printf("%s", std::accumulate(v_or.begin(), v_or.end(), std::string(),
@@ -170,7 +106,7 @@ int main() {
                 printf("}\n");
 
                 printf("%s", std::accumulate(v_or.begin(), v_or.end(), std::string(),
-                                             [](const std::string &a, int b) -> std::string {
+                                             [=](const std::string &a, int b) -> std::string {
                                                  std::stringstream ss;
                                                  ss << "(";
                                                  for (auto i = 1; i <= prop_num; i++) {
@@ -198,14 +134,9 @@ int main() {
                         break;
                 }
 
-                yylex_init(&scanner);
-                state = yy_scan_string(buffer, scanner);
-                yyparse(&exp, scanner);
-                yy_delete_buffer(state, scanner);
-                yylex_destroy(scanner);
-
+                parse_expression(&exp, buffer);
                 // Collect props alphabetically
-                mark_props(exp);
+                mark_props(exp, prop, prop_num);
                 count = 0;
                 for (auto i = 0; i < 26; i++) {
                     if (prop[i]) {
@@ -215,13 +146,13 @@ int main() {
                 }
                 count = 0;
                 do {
-                    if (calc(exp)) {
+                    if (calc(exp, prop, permu)) {
                         v_or.push_back(count);
                     } else {
                         v_and.push_back((1 << prop_num) - 1 - count);
                     }
                     count++;
-                } while (next_permutation());
+                } while (next_permutation(prop_num, permu));
 
                 printf("\\/_{");
                 printf("%s", std::accumulate(v_or.begin(), v_or.end(), std::string(),
@@ -242,5 +173,6 @@ int main() {
                 printf("Goodbye!\n");
                 return 0;
         }
+        free_expression(&exp);
     }
 }

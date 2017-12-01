@@ -15,5 +15,6 @@ Expression *createOp(OperationType type,
     b->type = type;
     b->left = left;
     b->right = right;
+    b->value = 0;
     return b;
 }
