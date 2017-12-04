@@ -64,6 +64,23 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parser.y" /* yacc.c:339  */
 
+    /*
+     *  This file is part of props
+     *  Copyright (c) 2017 props's authors
+     *  This program is free software: you can redistribute it and/or modify
+     *  it under the terms of the GNU General Public License as published by
+     *  the Free Software Foundation, either version 3 of the License, or
+     *  (at your option) any later version.
+
+     *  This program is distributed in the hope that it will be useful,
+     *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+     *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *  GNU General Public License for more details.
+
+     *  You should have received a copy of the GNU General Public License
+     *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
+
 #include "expression.h"
 #include "parser.h"
 #include "lexer.h"
@@ -74,7 +91,7 @@ int yyerror(Expression **exp, yyscan_t scanner, const char *msg) {
 }
 
 
-#line 78 "parser.c" /* yacc.c:339  */
+#line 95 "parser.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -104,14 +121,14 @@ int yyerror(Expression **exp, yyscan_t scanner, const char *msg) {
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 13 "parser.y" /* yacc.c:355  */
+#line 30 "parser.y" /* yacc.c:355  */
 
 #ifndef YY_TYPEDEF_YY_SCANNER_T
 #define YY_TYPEDEF_YY_SCANNER_T
 typedef void* yyscan_t;
 #endif
 
-#line 115 "parser.c" /* yacc.c:355  */
+#line 132 "parser.c" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -134,12 +151,12 @@ typedef void* yyscan_t;
 
 union YYSTYPE
 {
-#line 28 "parser.y" /* yacc.c:355  */
+#line 45 "parser.y" /* yacc.c:355  */
 
     char value;
     Expression *expression;
 
-#line 143 "parser.c" /* yacc.c:355  */
+#line 160 "parser.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -155,7 +172,7 @@ int yyparse (Expression **expression, yyscan_t scanner);
 
 /* Copy the second part of user declarations.  */
 
-#line 159 "parser.c" /* yacc.c:358  */
+#line 176 "parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -453,7 +470,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    52,    52,    55,    56,    57,    58,    59,    60,    61
+       0,    69,    69,    72,    73,    74,    75,    76,    77,    78
 };
 #endif
 
@@ -1237,55 +1254,55 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 52 "parser.y" /* yacc.c:1661  */
+#line 69 "parser.y" /* yacc.c:1661  */
     {*expression = (yyvsp[0].expression);}
-#line 1243 "parser.c" /* yacc.c:1661  */
+#line 1260 "parser.c" /* yacc.c:1661  */
     break;
 
   case 3:
-#line 55 "parser.y" /* yacc.c:1661  */
+#line 72 "parser.y" /* yacc.c:1661  */
     {(yyval.expression) = createOp(NOT,NULL,(yyvsp[0].expression));}
-#line 1249 "parser.c" /* yacc.c:1661  */
+#line 1266 "parser.c" /* yacc.c:1661  */
     break;
 
   case 4:
-#line 56 "parser.y" /* yacc.c:1661  */
+#line 73 "parser.y" /* yacc.c:1661  */
     { (yyval.expression) = createOp(OR, (yyvsp[-2].expression),(yyvsp[0].expression));}
-#line 1255 "parser.c" /* yacc.c:1661  */
+#line 1272 "parser.c" /* yacc.c:1661  */
     break;
 
   case 5:
-#line 57 "parser.y" /* yacc.c:1661  */
+#line 74 "parser.y" /* yacc.c:1661  */
     { (yyval.expression) = createOp(AND, (yyvsp[-2].expression), (yyvsp[0].expression));}
-#line 1261 "parser.c" /* yacc.c:1661  */
+#line 1278 "parser.c" /* yacc.c:1661  */
     break;
 
   case 6:
-#line 58 "parser.y" /* yacc.c:1661  */
+#line 75 "parser.y" /* yacc.c:1661  */
     { (yyval.expression) = createOp(IMPLIES, (yyvsp[-2].expression), (yyvsp[0].expression));}
-#line 1267 "parser.c" /* yacc.c:1661  */
+#line 1284 "parser.c" /* yacc.c:1661  */
     break;
 
   case 7:
-#line 59 "parser.y" /* yacc.c:1661  */
+#line 76 "parser.y" /* yacc.c:1661  */
     { (yyval.expression) = createOp(DOUBLE_IMPLIES, (yyvsp[-2].expression), (yyvsp[0].expression));}
-#line 1273 "parser.c" /* yacc.c:1661  */
+#line 1290 "parser.c" /* yacc.c:1661  */
     break;
 
   case 8:
-#line 60 "parser.y" /* yacc.c:1661  */
+#line 77 "parser.y" /* yacc.c:1661  */
     { (yyval.expression) = (yyvsp[-1].expression);}
-#line 1279 "parser.c" /* yacc.c:1661  */
+#line 1296 "parser.c" /* yacc.c:1661  */
     break;
 
   case 9:
-#line 61 "parser.y" /* yacc.c:1661  */
+#line 78 "parser.y" /* yacc.c:1661  */
     { (yyval.expression) = createProp((yyvsp[0].value));}
-#line 1285 "parser.c" /* yacc.c:1661  */
+#line 1302 "parser.c" /* yacc.c:1661  */
     break;
 
 
-#line 1289 "parser.c" /* yacc.c:1661  */
+#line 1306 "parser.c" /* yacc.c:1661  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1513,7 +1530,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 64 "parser.y" /* yacc.c:1906  */
+#line 81 "parser.y" /* yacc.c:1906  */
 
 
 
