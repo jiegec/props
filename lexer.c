@@ -444,14 +444,31 @@ static const flex_int16_t yy_chk[33] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "lexer.l"
 #line 2 "lexer.l"
+/*
+ *  This file is part of props
+ *  Copyright (c) 2017 props's authors
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "expression.h"
 #include "parser.h"
 
 #include <stdio.h>
 
-#line 452 "lexer.c"
+#line 469 "lexer.c"
 #define YY_NO_UNISTD_H 1
-#line 454 "lexer.c"
+#line 471 "lexer.c"
 
 #define INITIAL 0
 
@@ -725,10 +742,10 @@ YY_DECL
 		}
 
 	{
-#line 26 "lexer.l"
+#line 43 "lexer.l"
 
 
-#line 731 "lexer.c"
+#line 748 "lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -784,60 +801,60 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 45 "lexer.l"
 { /* Skip blanks. */ }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 46 "lexer.l"
 { sscanf(yytext, "%c", &yylval->value); return TOKEN_PROP; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 48 "lexer.l"
 { return TOKEN_NOT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 32 "lexer.l"
+#line 49 "lexer.l"
 { return TOKEN_AND; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 33 "lexer.l"
+#line 50 "lexer.l"
 { return TOKEN_OR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 34 "lexer.l"
+#line 51 "lexer.l"
 { return TOKEN_IMPLIES; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 35 "lexer.l"
+#line 52 "lexer.l"
 { return TOKEN_DOUBLE_IMPLIES; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 36 "lexer.l"
+#line 53 "lexer.l"
 { return TOKEN_LPAREN; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 37 "lexer.l"
+#line 54 "lexer.l"
 { return TOKEN_RPAREN; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 38 "lexer.l"
+#line 55 "lexer.l"
 { }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 40 "lexer.l"
+#line 57 "lexer.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 840 "lexer.c"
+#line 857 "lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2019,7 +2036,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 
 #define YYTABLES_NAME "yytables"
 
-#line 40 "lexer.l"
+#line 57 "lexer.l"
 
 
 

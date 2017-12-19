@@ -18,28 +18,32 @@
 cmake_minimum_required(VERSION 3.8)
 project(props)
 
-set(CMAKE_CXX_STANDARD 11)
-
-set(SOURCE_FILES
-        expression.c
-        expression.h
-        prop.cpp
-        prop.h
-        lexer.c
-        parser.c)
-
 find_package(BISON)
 find_package(FLEX)
 
-BISON_TARGET(Parser parser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser.c)
-FLEX_TARGET(Scanner lexer.l  ${CMAKE_CURRENT_SOURCE_DIR}/lexer.c)
+FLEX_TARGET(Scanner lexer.l ${CMAKE_CURRENT_SOURCE_DIR}/lexer.c
+    DEFINES_FILE ${CMAKE_CURRENT_SOURCE_DIR}/lexer.h)
+BISON_TARGET(Parser parser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser.c
+    DEFINES_FILE ${CMAKE_CURRENT_SOURCE_DIR}/parser.h)
 ADD_FLEX_BISON_DEPENDENCY(Scanner Parser)
 
-add_executable(props main.cpp ${SOURCE_FILES} ${BISON_Parser_OUTPUTS} ${FLEX_Scanner_OUTPUTS})
-target_link_libraries(props "fl")
+add_library(props_lib prop.h expression.h)
+target_compile_features(props_lib PRIVATE cxx_std_11)
+target_link_libraries(props_lib PUBLIC "fl")
+target_sources(props_lib
+    PRIVATE
+      ${BISON_Parser_OUTPUTS}
+      ${FLEX_Scanner_OUTPUTS}
+      prop.cpp
+      expression.c)
+
+add_executable(props main.cpp)
+target_compile_features(props PRIVATE cxx_std_11)
+target_link_libraries(props props_lib)
 
 enable_testing()
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 add_executable(props_test test.cpp ${SOURCE_FILES})
-target_link_libraries(props_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(props_test ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} props_lib)
+target_compile_features(props_test PRIVATE cxx_std_11)
 add_test(props_test props_test)

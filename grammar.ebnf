@@ -1,0 +1,10 @@
+and ::= exp "/\" exp
+or ::= exp "\/" exp
+implies ::= exp "->" exp
+double_implies ::= exp "<->" exp
+exp ::= prop
+      | and
+      | or
+      | implies
+      | double_implies
+      | "(" exp ")"
